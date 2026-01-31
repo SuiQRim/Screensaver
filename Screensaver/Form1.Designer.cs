@@ -34,7 +34,6 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.background;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1340, 783);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -42,7 +41,6 @@
             Text = "Form1";
             TopMost = true;
             WindowState = FormWindowState.Maximized;
-            Load += Form1_Load;
             ResumeLayout(false);
         }
 
