@@ -28,10 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            SuspendLayout();
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackgroundImage = Properties.Resources.background;
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1340, 783);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Name = "Form1";
             Text = "Form1";
+            TopMost = true;
+            WindowState = FormWindowState.Maximized;
+            Load += Form1_Load;
+            ResumeLayout(false);
         }
 
         #endregion
