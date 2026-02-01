@@ -1,5 +1,5 @@
-using Timer = System.Windows.Forms.Timer;
 using Screensaver.Models;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Screensaver
 {
@@ -11,7 +11,7 @@ namespace Screensaver
         private Graphics bufferGraphics;
 
         private string backGroundPath = Path.Combine(Application.StartupPath, "Resources", "background.jpg");
-        private string snowflake = Path.Combine(Application.StartupPath, "Resources", "snejinka.png");
+        private string snowflakePath = Path.Combine(Application.StartupPath, "Resources", "snejinka.png");
 
         private const int TIMER_INTERVAL = 50;
         private const int SNOWFLAKE_COUNT = 100;
@@ -31,7 +31,7 @@ namespace Screensaver
             InitializeComponent();
 
             backgroundBitmap = new Bitmap(backGroundPath);
-            overlayBitmap = new Bitmap(snowflake);
+            overlayBitmap = new Bitmap(snowflakePath);
 
             this.Load += Form1_Load;
 
@@ -40,7 +40,7 @@ namespace Screensaver
 
             timer = new Timer();
             timer.Interval = TIMER_INTERVAL;
-            timer.Tick += Timer_Tick;
+            timer.Tick += Timer_Tick; 
         }
 
         private void Form1_Load(object sender, EventArgs e)
