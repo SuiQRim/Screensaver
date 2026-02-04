@@ -3,6 +3,9 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace Screensaver
 {
+    /// <summary>
+    /// Окно
+    /// </summary>
     public partial class ScreensaverWindow : Form
     {
         private Bitmap backgroundBitmap;
@@ -13,19 +16,21 @@ namespace Screensaver
         private string backGroundPath = Path.Combine(Application.StartupPath, "Resources", "background.jpg");
         private string snowflakePath = Path.Combine(Application.StartupPath, "Resources", "snejinka.png");
 
-        private const int TIMER_INTERVAL = 50;
-        private const int SNOWFLAKE_COUNT = 100;
-        private const int MIN_SIZE = 18;
-        private const int MAX_SIZE = 40;
-        private const float MIN_SPEED = 4.0f;
-        private const float MAX_SPEED = 12.0f;
-        private const float HORIZONTAL_MOVEMENT_FACTOR = 5.0f;
+        private const int TimerInterval = 50;
+        private const int SnowflakeCount = 100;
+        private const int MinSnowflakeSize = 18;
+        private const int MaxSnowflakeSize = 40;
+        private const float MinSnowflakeSpeed = 4.0f;
+        private const float MaxSnowflakeSpeed = 12.0f;
+        private const float HorizontalMovementFactor = 5.0f;
 
         private List<Snowflake> snowflakes = new List<Snowflake>();
         private Random random = new Random();
         private Timer timer;
-        private bool initialized = false;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
         public ScreensaverWindow()
         {
             InitializeComponent();
@@ -33,13 +38,13 @@ namespace Screensaver
             backgroundBitmap = new Bitmap(backGroundPath);
             overlayBitmap = new Bitmap(snowflakePath);
 
-            this.Load += Form1_Load;
+            Load += Form1_Load;
 
-            this.KeyDown += (sender, e) => this.Close();
-            this.MouseClick += (sender, e) => this.Close();
+            KeyDown += (_, _) => Close();
+            MouseClick += (_, _) => Close();
 
             timer = new Timer();
-            timer.Interval = TIMER_INTERVAL;
+            timer.Interval = TimerInterval;
             timer.Tick += Timer_Tick; 
         }
 
@@ -48,7 +53,6 @@ namespace Screensaver
             InitializeBuffer();
             InitializeSnowflakes();
             timer.Start();
-            initialized = true;
         }
 
         private void InitializeBuffer()
@@ -63,12 +67,12 @@ namespace Screensaver
             int width = this.ClientSize.Width;
             int height = this.ClientSize.Height;
 
-            for (int i = 0; i < SNOWFLAKE_COUNT; i++)
+            for (int i = 0; i < SnowflakeCount; i++)
             {
-                int size = random.Next(MIN_SIZE, MAX_SIZE + 1);
+                int size = random.Next(MinSnowflakeSize, MaxSnowflakeSize + 1);
 
-                float sizeRatio = (float)(size - MIN_SIZE) / (MAX_SIZE - MIN_SIZE);
-                float speed = MIN_SPEED + sizeRatio * (MAX_SPEED - MIN_SPEED);
+                float sizeRatio = (float)(size - MinSnowflakeSize) / (MaxSnowflakeSize - MinSnowflakeSize);
+                float speed = MinSnowflakeSpeed + sizeRatio * (MaxSnowflakeSpeed - MinSnowflakeSpeed);
 
                 snowflakes.Add(new Snowflake
                 {
@@ -82,8 +86,6 @@ namespace Screensaver
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (!initialized) return;
-
             UpdateSnowflakes();
             DrawToBuffer();
 
@@ -103,8 +105,8 @@ namespace Screensaver
             {
                 flake.Y += (int)Math.Round(flake.Speed);
 
-                float horizontalFactor = (float)flake.Size / MAX_SIZE;
-                int horizontalRange = (int)(HORIZONTAL_MOVEMENT_FACTOR * horizontalFactor);
+                float horizontalFactor = (float)flake.Size / MaxSnowflakeSize;
+                int horizontalRange = (int)(HorizontalMovementFactor * horizontalFactor);
                 flake.X += random.Next(-horizontalRange, horizontalRange + 1);
 
                 if (flake.Y > height)
