@@ -57,22 +57,22 @@ namespace Screensaver
 
         private void InitializeBuffer()
         {
-            bufferBitmap = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
+            bufferBitmap = new Bitmap(ClientSize.Width, ClientSize.Height);
             bufferGraphics = Graphics.FromImage(bufferBitmap);
         }
 
         private void InitializeSnowflakes()
         {
             snowflakes.Clear();
-            int width = this.ClientSize.Width;
-            int height = this.ClientSize.Height;
+            var width = ClientSize.Width;
+            var height = ClientSize.Height;
 
-            for (int i = 0; i < SnowflakeCount; i++)
+            for (var i = 0; i < SnowflakeCount; i++)
             {
-                int size = random.Next(MinSnowflakeSize, MaxSnowflakeSize + 1);
+                var size = random.Next(MinSnowflakeSize, MaxSnowflakeSize + 1);
 
-                float sizeRatio = (float)(size - MinSnowflakeSize) / (MaxSnowflakeSize - MinSnowflakeSize);
-                float speed = MinSnowflakeSpeed + sizeRatio * (MaxSnowflakeSpeed - MinSnowflakeSpeed);
+                var sizeRatio = (float)(size - MinSnowflakeSize) / (MaxSnowflakeSize - MinSnowflakeSize);
+                var speed = MinSnowflakeSpeed + sizeRatio * (MaxSnowflakeSpeed - MinSnowflakeSpeed);
 
                 snowflakes.Add(new Snowflake
                 {
@@ -89,7 +89,7 @@ namespace Screensaver
             UpdateSnowflakes();
             DrawToBuffer();
 
-            using (Graphics formGraphics = this.CreateGraphics())
+            using (Graphics formGraphics = CreateGraphics())
             {
                 formGraphics.DrawImage(bufferBitmap, 0, 0);
             }
@@ -97,23 +97,23 @@ namespace Screensaver
 
         private void UpdateSnowflakes()
         {
-            int width = this.ClientSize.Width;
-            int height = this.ClientSize.Height;
+            var width = ClientSize.Width;
+            var height = ClientSize.Height;
 
 
             foreach (var flake in snowflakes)
             {
                 flake.Y += (int)Math.Round(flake.Speed);
 
-                float horizontalFactor = (float)flake.Size / MaxSnowflakeSize;
-                int horizontalRange = (int)(HorizontalMovementFactor * horizontalFactor);
+                var horizontalFactor = (float)flake.Size / MaxSnowflakeSize;
+                var horizontalRange = (int)(HorizontalMovementFactor * horizontalFactor);
                 flake.X += random.Next(-horizontalRange, horizontalRange + 1);
 
                 if (flake.Y > height)
                 {
                     flake.Y = -flake.Size;
 
-                    int horizontalOffset = flake.Size;
+                    var horizontalOffset = flake.Size;
                     flake.X = random.Next(-horizontalOffset, width + horizontalOffset);
                 }
 
@@ -127,8 +127,8 @@ namespace Screensaver
 
         private void DrawToBuffer()
         {
-            int width = this.ClientSize.Width;
-            int height = this.ClientSize.Height;
+            var width = ClientSize.Width;
+            var height = ClientSize.Height;
 
             bufferGraphics.DrawImage(backgroundBitmap, 0, 0, width, height);
             foreach (var flake in snowflakes)
