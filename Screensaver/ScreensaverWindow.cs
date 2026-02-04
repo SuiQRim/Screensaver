@@ -13,9 +13,6 @@ namespace Screensaver
         private Bitmap bufferBitmap;
         private Graphics bufferGraphics;
 
-        private string backGroundPath = Path.Combine(Application.StartupPath, "Resources", "background.jpg");
-        private string snowflakePath = Path.Combine(Application.StartupPath, "Resources", "snejinka.png");
-
         private const int TimerInterval = 50;
         private const int SnowflakeCount = 100;
         private const int MinSnowflakeSize = 18;
@@ -35,8 +32,8 @@ namespace Screensaver
         {
             InitializeComponent();
 
-            backgroundBitmap = new Bitmap(backGroundPath);
-            overlayBitmap = new Bitmap(snowflakePath);
+            backgroundBitmap = new Bitmap(Properties.Resources.background);
+            overlayBitmap = new Bitmap(Properties.Resources.snejinka);
 
             Load += Form1_Load;
 
