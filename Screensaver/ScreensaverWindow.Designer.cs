@@ -1,6 +1,6 @@
 ﻿namespace Screensaver
 {
-    partial class Form1
+    partial class ScreensaverWindow
     {
         /// <summary>
         ///  Required designer variable.

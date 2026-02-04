@@ -3,7 +3,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace Screensaver
 {
-    public partial class Form1 : Form
+    public partial class ScreensaverWindow : Form
     {
         private Bitmap backgroundBitmap;
         private Bitmap overlayBitmap;
@@ -26,7 +26,7 @@ namespace Screensaver
         private Timer timer;
         private bool initialized = false;
 
-        public Form1()
+        public ScreensaverWindow()
         {
             InitializeComponent();
 
