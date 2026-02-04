@@ -67,7 +67,7 @@ namespace Screensaver
             var width = ClientSize.Width;
             var height = ClientSize.Height;
 
-            for (var i = 0; i < SnowflakeCount; i++)
+            for (var flakeCouter = 0; flakeCouter < SnowflakeCount; flakeCouter++)
             {
                 var size = random.Next(MinSnowflakeSize, MaxSnowflakeSize + 1);
 
