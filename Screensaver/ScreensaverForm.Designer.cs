@@ -38,7 +38,6 @@
             ClientSize = new Size(1340, 783);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ScreensaverForm";
-            Text = "Form1";
             TopMost = true;
             WindowState = FormWindowState.Maximized;
             FormClosing += CloseForm;
