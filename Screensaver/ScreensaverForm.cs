@@ -1,10 +1,10 @@
-using Screensaver.Models;
+ï»¿using Screensaver.Models;
 using Timer = System.Windows.Forms.Timer;
 
 namespace Screensaver
 {
     /// <summary>
-    /// Îêíî
+    /// ĞĞºĞ½Ğ¾
     /// </summary>
     public partial class ScreensaverForm : Form
     {

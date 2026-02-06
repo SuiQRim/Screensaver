@@ -1,4 +1,4 @@
-namespace Screensaver
+﻿namespace Screensaver
 {
     /// <summary>
     /// Основной класс с точкой входа
