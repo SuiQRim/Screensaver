@@ -6,13 +6,15 @@ namespace Screensaver
     /// <summary>
     /// Окно
     /// </summary>
-    public partial class ScreensaverWindow : Form
+    public partial class ScreensaverForm : Form
     {
         private Bitmap backgroundBitmap;
         private Bitmap overlayBitmap;
         private Bitmap bufferBitmap;
         private Graphics bufferGraphics;
 
+        private const int GraphicsStartPositionX = 0;
+        private const int GraphicsStartPositionY = 0;
         private const int TimerInterval = 50;
         private const int SnowflakeCount = 100;
         private const int MinSnowflakeSize = 18;
@@ -21,31 +23,28 @@ namespace Screensaver
         private const float MaxSnowflakeSpeed = 12.0f;
         private const float HorizontalMovementFactor = 5.0f;
 
-        private List<Snowflake> snowflakes = new List<Snowflake>();
-        private Random random = new Random();
+        private List<Snowflake> snowflakes = [];
+        private Random random = new();
         private Timer timer;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public ScreensaverWindow()
+        public ScreensaverForm()
         {
             InitializeComponent();
 
             backgroundBitmap = new Bitmap(Properties.Resources.background);
             overlayBitmap = new Bitmap(Properties.Resources.snejinka);
 
-            Load += Form1_Load;
-
-            KeyDown += (_, _) => Close();
-            MouseClick += (_, _) => Close();
-
-            timer = new Timer();
-            timer.Interval = TimerInterval;
-            timer.Tick += Timer_Tick; 
+            timer = new()
+            {
+                Interval = TimerInterval
+            };
+            timer.Tick += Timer_Tick;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void FormShown(object sender, EventArgs e)
         {
             InitializeBuffer();
             InitializeSnowflakes();
@@ -60,11 +59,10 @@ namespace Screensaver
 
         private void InitializeSnowflakes()
         {
-            snowflakes.Clear();
             var width = ClientSize.Width;
             var height = ClientSize.Height;
 
-            for (var flakeCouter = 0; flakeCouter < SnowflakeCount; flakeCouter++)
+            for (var flakeCounter = 0; flakeCounter < SnowflakeCount; flakeCounter++)
             {
                 var size = random.Next(MinSnowflakeSize, MaxSnowflakeSize + 1);
 
@@ -73,7 +71,7 @@ namespace Screensaver
 
                 snowflakes.Add(new Snowflake
                 {
-                    X = random.Next(0, width),
+                    X = random.Next(GraphicsStartPositionX, width),
                     Y = random.Next(-height, height),
                     Size = size,
                     Speed = speed
@@ -88,15 +86,15 @@ namespace Screensaver
 
             using (Graphics formGraphics = CreateGraphics())
             {
-                formGraphics.DrawImage(bufferBitmap, 0, 0);
+                formGraphics.DrawImage(bufferBitmap, GraphicsStartPositionX, GraphicsStartPositionY);
             }
         }
+
 
         private void UpdateSnowflakes()
         {
             var width = ClientSize.Width;
             var height = ClientSize.Height;
-
 
             foreach (var flake in snowflakes)
             {
@@ -116,9 +114,13 @@ namespace Screensaver
 
                 int teleportThreshold = flake.Size;
                 if (flake.X < -teleportThreshold)
+                {
                     flake.X = width + flake.Size;
+                }
                 else if (flake.X > width + teleportThreshold)
+                {
                     flake.X = -flake.Size;
+                }
             }
         }
 
@@ -127,29 +129,30 @@ namespace Screensaver
             var width = ClientSize.Width;
             var height = ClientSize.Height;
 
-            bufferGraphics.DrawImage(backgroundBitmap, 0, 0, width, height);
+            bufferGraphics.DrawImage(backgroundBitmap, GraphicsStartPositionX, GraphicsStartPositionY, width, height);
             foreach (var flake in snowflakes)
             {
-                if (flake.Y + flake.Size >= 0 && flake.Y <= height &&
-                    flake.X + flake.Size >= 0 && flake.X <= width)
+                if (flake.Y + flake.Size >= GraphicsStartPositionY && flake.Y <= height &&
+                    flake.X + flake.Size >= GraphicsStartPositionX && flake.X <= width)
                 {
                     bufferGraphics.DrawImage(overlayBitmap, flake.X, flake.Y, flake.Size, flake.Size);
                 }
             }
         }
 
-        protected override void OnPaint(PaintEventArgs e)
+        private void CloseForm(object sender, FormClosingEventArgs e)
         {
-            if (bufferBitmap != null)
-            {
-                e.Graphics.DrawImage(bufferBitmap, 0, 0);
-            }
+            timer.Stop();
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        private void ScreensaverForm_KeyPress(object sender, KeyPressEventArgs e)
         {
-            timer?.Stop();
-            base.OnFormClosing(e);
+            Close();
+        }
+
+        private void ScreensaverForm_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

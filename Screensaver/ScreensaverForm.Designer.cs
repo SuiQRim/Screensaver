@@ -1,6 +1,6 @@
 ﻿namespace Screensaver
 {
-    partial class ScreensaverWindow
+    partial class ScreensaverForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -30,17 +30,21 @@
         {
             SuspendLayout();
             // 
-            // Form1
+            // ScreensaverForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1340, 783);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Form1";
+            Name = "ScreensaverForm";
             Text = "Form1";
             TopMost = true;
             WindowState = FormWindowState.Maximized;
+            FormClosing += CloseForm;
+            Shown += FormShown;
+            Click += ScreensaverForm_Click;
+            KeyPress += ScreensaverForm_KeyPress;
             ResumeLayout(false);
         }
 
